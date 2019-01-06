@@ -1,0 +1,61 @@
+ul, #myUL #docUL{
+    list-style-type: none !important;
+}
+
+#myUL {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.caret {
+    cursor: pointer !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important; 
+    -ms-user-select: none !important; 
+    user-select: none !important;
+}
+
+.my-caret::before {
+    /*content: url(../images/more.png);*/
+    content: url(../images/ClosedFolder.PNG);
+    position: absolute !important;
+    display: inline-block !important;
+    margin-right: 15px !important;
+}
+
+.caret-down::before {
+    /*content: url(../images/less.png);*/
+    content: url(../images/OpenFolder.PNG);
+    position: absolute !important;
+    display: inline-block !important;
+}
+
+.nested {
+    display: none !important;
+}
+
+.active {
+    display: block !important;
+}
+
+.creative{
+    font-family: calibri !important;
+    padding-left: 50px !important;
+}
+
+.treeHeader{
+    padding-left: 40px !important;
+    padding-top: 5px !important;
+}
+.font-style-first {
+    font-size: 25px;
+    color: #0077b3;
+}
+.font-style-second {
+    font-size: 20px;
+    color: #00aaff;
+}
+.font-style-third {
+    font-size: 15px;
+    color: #ff6600;
+}
