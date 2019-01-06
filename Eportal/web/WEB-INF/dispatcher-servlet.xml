@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd" xmlns:mvc="http://www.springframework.org/schema/mvc">
+    <!--
+    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    -->
+    <!--<mvc:annotation-driven />-->
+    
+    <context:component-scan  base-package="com.eportal.entities" />
+    <context:property-placeholder location="classpath:status.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:log4j.properties" ignore-unresolvable="true"/>
+    <!--
+        Most controllers will use the ControllerClassNameHandlerMapping above, but
+        for the index controller we are using ParameterizableViewController, so we must
+        define an explicit mapping for it.
+    -->    
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="welcome.do">welcomeController</prop>
+                
+                <prop key="login.do">indexController</prop>
+                <prop key="index.do">indexController</prop>
+                <prop key="error.do">indexController</prop>
+                <prop key="logout.do">indexController</prop>
+                
+                <prop key="register.do">registerController</prop>
+                <prop key="toregister.do">toRegisterController</prop>
+                <prop key="createrfp.do">createRfp</prop>
+                <prop key="rfeCont.do">rfeController</prop>
+                <prop key="home.do">redirectToIndex</prop>
+                <prop key="registerRfpRequest.do">registerRfpRequest</prop>
+                <prop key="mytask.do">myTask</prop>
+                <prop key="showRfp.do">showRfpCont</prop>
+                <prop key="updateRfp.do">updateRfpCont</prop>
+                
+                <prop key="newsupplier.do">supplierManagement</prop>
+                <prop key="registerSupplier.do">supplierManagement</prop>
+                <prop key="registeredSupplier.do">supplierManagement</prop>
+                <prop key="showSupplier.do">supplierManagement</prop>
+                <prop key="updateSupplier.do">supplierManagement</prop>
+                <prop key="inviteSupplier.do">supplierManagement</prop>
+                <prop key="supplierLogin.do">supplierManagement</prop>
+                <prop key="supplierHome.do">supplierManagement</prop>
+                
+                <prop key="releaseRfp.do">rfeManagementController</prop>
+                <prop key="doReleaseRfp.do">rfeManagementController</prop>
+                <prop key="doActionOnRejectReleasedRfp.do">rfeManagementController</prop>
+                <prop key="doSubmitReleasedRfp.do">rfeManagementController</prop>
+                <prop key="rfpStatus.do">rfeManagementController</prop>
+                <prop key="showAwardRfp.do">rfeManagementController</prop>
+                <prop key="doAwardRfp.do">rfeManagementController</prop>
+                <prop key="doAwardAllSupplierRfp.do">rfeManagementController</prop>
+                <prop key="redirectByRfpStatus.do">rfeManagementController</prop>
+                <prop key="rfpstatussummary.do">rfeManagementController</prop>
+                <prop key="rfpsummarydetails.do">rfeManagementController</prop>
+                <prop key="supplierstatussummarydetails.do">rfeManagementController</prop>
+                
+                <prop key="updateForRevision.do">updateRfpForRevision</prop>
+                
+                <prop key="downloadFile.do">downloadFileController</prop>
+                <prop key="downloadSupplierFile.do">downloadFileController</prop>
+                <prop key="downloadSupplierAttachment.do">downloadFileController</prop>
+                <prop key="downloadConversationAttachment.do">downloadFileController</prop>
+                <prop key="downloadCustomerDocument.do">downloadFileController</prop>
+                <prop key="customertermsandconditions.do">downloadFileController</prop>
+                <prop key="downloadcustomerconversationattachment.do">downloadFileController</prop>
+				<prop key="downloadcustomerusermanual.do">downloadFileController</prop>
+                
+                <prop key="responseManagement.do">responseManagement</prop>
+                <prop key="responseComment.do">responseManagement</prop>
+                <prop key="makeComment.do">responseManagement</prop>
+                <prop key="makeCommentToAllSelectedSupplier.do">responseManagement</prop>
+                
+                <prop key="budgetComparison.do">reportManagement</prop>
+                
+                <prop key="customerlogin.do">customerManagement</prop>
+                <prop key="customerhome.do">customerManagement</prop>
+                <prop key="redirectcustomerhome.do">customerManagement</prop>
+                <prop key="showadddocument.do">customerManagement</prop>
+                <prop key="showsearchdocument.do">customerManagement</prop>
+                <prop key="uploaddocument.do">customerManagement</prop>
+                <prop key="manageuser.do">customerManagement</prop>
+                <prop key="managegroup.do">customerManagement</prop>
+                <prop key="addcustomersubuser.do">customerManagement</prop>
+                <prop key="custadvsearch.do">customerManagement</prop>
+                <prop key="customerstatement.do">customerManagement</prop>
+                <prop key="customeraboutus.do">customerManagement</prop>
+                <prop key="customermyorders.do">customerManagement</prop>
+                <prop key="customereditprofile.do">customerManagement</prop>
+                <prop key="updatecustomerprofile.do">customerManagement</prop>
+                <prop key="updatecustomerpassword.do">customerManagement</prop>
+                <prop key="customerforgetpassword.do">customerManagement</prop>
+                <prop key="customerresponse.do">customerManagement</prop>
+                <prop key="customerresponsemgnt.do">customerManagement</prop>
+                <prop key="makecustomercomment.do">customerManagement</prop>
+                <prop key="mappedgroup.do">customerManagement</prop>
+                <prop key="customeredituser.do">customerManagement</prop>
+                <prop key="deletecustomeruser.do">customerManagement</prop>
+                <prop key="updatecustomeruser.do">customerManagement</prop>
+                <prop key="mappcustomertogroup.do">customerManagement</prop>
+                <prop key="customercontractdocument.do">customerManagement</prop>
+                <prop key="customerpasswordconfig.do">customerManagement</prop>
+                <prop key="customerlogout.do">customerManagement</prop>
+                <prop key="updatepass.do">customerManagement</prop>
+		<prop key="customerforgotpassword.do">customerManagement</prop>
+		<prop key="updateforgotpassword.do">customerManagement</prop>
+		<prop key="sendmessagetoallcustomeruser.do">customerManagement</prop>
+		<prop key="customerdashboardconfiguration.do">customerManagement</prop>
+                <prop key="updatecustomerdashboardimage.do">customerManagement</prop>
+                
+                <prop key="updatecustomerpasswordconfig.do">customerManagement</prop>
+                
+                <prop key="removecustomerproject.do">customerManagement</prop>
+                
+                <prop key="termsandcondition.do">customerManagement</prop>
+                
+                <prop key="uploadtermsandconditiondocument.do">customerManagement</prop>
+                <prop key="customerprofilereport.do">customerManagement</prop>
+                <prop key="customerreport.do">customerManagement</prop>
+                <prop key="customermanageprojects.do">customerManagement</prop>
+                <prop key="removecustomerdocument.do">customerManagement</prop>
+                <prop key="redirecttocustomerprofile.do">customerManagement</prop>
+                <prop key="customeradmintrackingreport.do">customerManagement</prop>
+                <prop key="customerautomailconfiguration.do">customerManagement</prop>
+                <prop key="customermailreport.do">customerManagement</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+          p:prefix="/WEB-INF/jsp/"
+          p:suffix=".jsp" />
+    
+<!--    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        
+    </bean>-->
+    
+    
+    <bean name="welcomeController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="welcome" />
+    
+    <bean name="indexController"
+          class="com.eportal.controller.Login"/>
+    
+    <bean name="registerController"
+          class="com.eportal.controller.Registeration"/>
+    
+    <bean name="toRegisterController"
+          class="com.eportal.controller.ToRegister"/>
+    
+    <bean name="createRfp"
+          class="com.eportal.controller.CreateRfp"/>
+    
+    <bean name="rfeController"
+          class="com.eportal.controller.RfeController"/>
+    
+    <bean name="redirectToIndex"
+          class="com.eportal.controller.RedirectIndex"/>
+    
+    <bean name="registerRfpRequest"
+          class="com.eportal.controller.CreateRfpCont"/>
+    
+    <bean name="myTask"
+          class="com.eportal.controller.MyTask"/>
+    
+    <bean name="showRfpCont"
+          class="com.eportal.controller.ShowRfpController"/>
+    
+    <bean name="updateRfpCont"
+          class="com.eportal.controller.UpdateRfpRequest"/>
+    
+    <bean name="supplierManagement"
+          class="com.eportal.controller.SupplierManagement"/>
+    
+    <bean name="rfeManagementController"
+          class="com.eportal.controller.RfeManagementController"/>           
+     
+    <bean name="updateRfpForRevision"
+          class="com.eportal.controller.UpdateRfpForRevision"/>            
+    
+    <bean name="downloadFileController"
+          class="com.eportal.controller.DownloadFileController"/>            
+    
+    <bean name="responseManagement"
+          class="com.eportal.controller.ReponseManagement"/>      
+    
+    <bean name="reportManagement"
+          class="com.eportal.controller.ReportManagement"/>
+    
+    <bean name="customerManagement"
+          class="com.eportal.controller.CustomerManagement"/>
+</beans>

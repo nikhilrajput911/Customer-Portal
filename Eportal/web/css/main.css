@@ -1,0 +1,38 @@
+.navbar .navbar-inner, .ace-nav>li.light-blue{ background-color: #2A3F54 !important; } 
+/*.sidebar, .sidebar-collapse, .nav-list>li>a, .nav-list>li .submenu{ background-color: #2A3F54 !important; }
+
+.nav-list>li>a, .nav-list>li.active>a, .nav-list>li.active>a:hover, .nav-list>li.active>a:focus, .nav-list>li.active>a:active{ color: #fff !important; }
+.nav-list>li>.submenu>li:first-child>a {
+    border-top: 1px solid #23527c !important;
+}*/
+.sidebar, .sidebar:before{ background-color: #2A3F54; border-right: #192632;  }
+.nav-list>li>a { background-color: #2A3F54; color: #fff; }
+.nav-list>li>a:hover:before{ background-color: #2A3F54; }
+.nav-list>li.active>a, .nav-list>li.active>a:hover, .nav-list>li.active>a:focus, .nav-list>li.active>a:active, .nav-list>li:hover>a{ color: #2A3F54; }
+.nav-list li.active>a:after{ border-right-color:#2A3F54; }
+.nav-list>li.active:after{ border-right: 2px solid #2A3F54; }
+.nav-list>li , .sidebar-collapse:before{ border-top: 1px solid #35506b; border-bottom: 1px solid #1f2e3d; }
+.nav-list>li:hover{  }
+.nav-list>li>.submenu>li:first-child>a {}
+.sidebar-collapse{ background-color: #2A3F54; border-bottom:1px solid #1f2e3d; }
+.sidebar-collapse>[class*="icon-"]{ color: #0b6cbc; }
+
+
+.login-layout{ background-color: #2A3F54; }
+.sidebar:before, .sidebar{ width: 224px; }
+.main-content{ margin-left: 225px; }
+.profile-info-name.labelName{ width: 50px; text-align: center; }
+.profile-info-value.labelValue{ margin-left: 60px; text-align: left; }
+.profile-activity:first-child:hover{ border-top-color:#fff; }
+.profile-activity:hover, .profile-activity{ background-color: #fff; border-left: 0; border-right: 0; }
+.notification-supplier p{ margin-bottom: 0px; }
+.notification-supplier span{ font-size: 11px; color: green; }
+.setDate{
+	width: 40px; height: 40px; border: 2px solid #c9d6e5; border-radius: 120px; background-color: #fff;
+}
+.setDate h4{ color: #d53f40; text-shadow: 1px 1px 0 rgba(0,0,0,0.15); }
+.vcenter{ height: 200px; position: relative; }
+.vcenter .infobox-container{ position: absolute; top: 50%;  -webkit-transform: translateY(-35%);
+  -ms-transform: translateY(-35%);
+  transform: translateY(-35%);
+ }

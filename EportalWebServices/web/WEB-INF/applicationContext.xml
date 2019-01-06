@@ -1,0 +1,290 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- was: <?xml version="1.0" encoding="UTF-8"?> -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context">
+
+    <mvc:annotation-driven/>   
+    
+    <bean id="propertyConfigurer"
+          class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
+          p:location="/WEB-INF/classes/jdbc.properties"
+          p:ignoreUnresolvablePlaceholders="true"/>
+    
+<!--    <bean id="statusProperty"
+          class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer"
+          p:location="/WEB-INF/classes/status.properties"
+          p:ignoreUnresolvablePlaceholders="true"/>
+        -->
+    <!--<context:property-placeholder location="">-->
+     
+<!--          <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+              p:driverClassName="${jdbc.driverClassName}"
+              p:url="${jdbc.url}"
+              p:username="${jdbc.username}"
+              p:password="${jdbc.password}" />
+          -->
+          
+          <bean id="dataSource"
+              class="com.eportal.config.CustomDriverManagerDataSource"
+              p:driverClassName="${jdbc.driverClassName}"
+              p:url="${jdbc.url}"
+              p:username="${jdbc.username}"
+              p:password="${jdbc.password}" />
+    
+<!--    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"  value="com.mysql.jdbc.Driver"></property>  
+        <property name="url" value="jdbc:mysql://localhost:3306/eportal?useSSL=false&amp;autoReconnect=true"></property>  
+        <property name="username" value="root"></property>  
+        <property name="password" value="welcome1"></property>
+    </bean>
+    -->
+    <bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"></property>
+    
+        <property name="packagesToScan" value="com.eportal.entities"></property>
+    
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>  
+                <prop key="hibernate.hbm2ddl.auto">update</prop>  
+                <prop key="hibernate.show_sql">true</prop>  
+            </props>
+        </property>
+    
+    </bean>
+    
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="*" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+    
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="mySessionFactory" />
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="-1"></property>
+    </bean>
+    
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        
+    </bean>
+    
+    <bean id="template" class="org.springframework.orm.hibernate4.HibernateTemplate">
+        <property name="sessionFactory" ref="mySessionFactory"></property>
+        <property name="checkWriteOperations" value="false"></property>
+    </bean>
+    
+<!--    <bean name="SecurityConfig" class="com.eportal.config.SecurityConfig"></bean>
+    -->
+    <bean id="userDao" class="com.eportal.dao.UserDetailDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="secQueDao" class="com.eportal.dao.UserSecSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="userSecQueDao" class="com.eportal.dao.UserSecurityQuestionDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="rfeStatus" class="com.eportal.dao.RfeStatusDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="rfeCostCode" class="com.eportal.dao.RfeCostCodeDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="rfeNegotiationStyle" class="com.eportal.dao.RfeNegotiationStyleDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="categorySubcategory" class="com.eportal.dao.CategorySubcategoryDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="clausesDao" class="com.eportal.dao.ClausesDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="rfqHeaderDao" class="com.eportal.dao.WorkOrderRfqHeaderDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="lineItemDao" class="com.eportal.dao.WorkOrderRfqLineItemDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="rfqAttachmentDao" class="com.eportal.dao.WorkOrderAttachmentDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="rfqClausesDao" class="com.eportal.dao.WorkOrderAddclausesDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="approvalDao" class="com.eportal.dao.WorkOrderSelectedApproverDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="userCountrySeededDao" class="com.eportal.dao.UserCountrySeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="gstStateSeededDao" class="com.eportal.dao.GstStateSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierStatusSeededDao" class="com.eportal.dao.SupplierStatusSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="typeOfBusinessSeededDao" class="com.eportal.dao.TypeOfBusinessSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierUserDao" class="com.eportal.dao.SupplierUserDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierUserBankDetailDao" class="com.eportal.dao.SupplierUserBankDetailDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierBankDetailsNewDao" class="com.eportal.dao.SupplierBankDetailsNewDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="workOrderCommentDao" class="com.eportal.dao.WorkOrderCommentDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierSelectionDao" class="com.eportal.dao.SupplierSelectionDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierAddattachmentDao" class="com.eportal.dao.SupplierAddattachmentDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierHeaderDao" class="com.eportal.dao.SupplierHeaderDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierLineitemDao" class="com.eportal.dao.SupplierLineitemDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierUserAttachmentDao" class="com.eportal.dao.SupplierUserAttachmentDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierUserRegContactDetailsDao" class="com.eportal.dao.SupplierUserRegContactDetailsDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="currencySeededDao" class="com.eportal.dao.CurrencySeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="qmQuestionDao" class="com.eportal.dao.QmQuestionDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="qmAnswerDao" class="com.eportal.dao.QmAnswerDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="userWfDao" class="com.eportal.dao.UserWfDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerDocumentDao" class="com.eportal.dao.CustomerDocumentDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerSubUserDao" class="com.eportal.dao.CustomerSubUserDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerDocumentSeededDao" class="com.eportal.dao.CustomerDocumentSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="groupsDao" class="com.eportal.dao.GroupsDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="supplierGroupsDao" class="com.eportal.dao.SupplierGroupDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerSeededDao" class="com.eportal.dao.CustomerSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="projectSeededDao" class="com.eportal.dao.ProjectSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerNotificationDao" class="com.eportal.dao.CustomerNotificationDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerProjectMappingDao" class="com.eportal.dao.CustomerProjectMappingDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="custSecQuesDao" class="com.eportal.dao.CustSecQuesDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerSecQueSeededDao" class="com.eportal.dao.CustomerSecQueSeededDao">
+        <property name="template" ref="template"></property>
+    </bean>
+	<bean id="customerAuditReportDao" class="com.eportal.dao.CustomerAuditReportDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerImageDao" class="com.eportal.dao.CustomerImageDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="passwordConfigurationDao" class="com.eportal.dao.PasswordConfigurationDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerProfileUpdateReportDao" class="com.eportal.dao.CustomerProfileUpdateReportDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerUserTrackingReportDao" class="com.eportal.dao.CustomerUserTrackingReportDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerMailDao" class="com.eportal.dao.CustomerMailDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    <bean id="customerAutoMailDao" class="com.eportal.dao.CustomerAutoMailDao">
+        <property name="template" ref="template"></property>
+    </bean>
+    
+    <bean id="user" class="com.eportal.entities.Userdetail"></bean>
+    <bean id="SecQue" class="com.eportal.entities.UserSecSeeded"></bean>
+    <bean id="UserSecQue" class="com.eportal.entities.UserSecurityQuestion"></bean>
+    <bean id="RfeStatus" class="com.eportal.entities.RfeStatus"></bean>
+    <bean id="RfeCostCode" class="com.eportal.entities.RfeCostCode"></bean>
+    <bean id="RfeNegotiationStyle" class="com.eportal.entities.RfeNegotiationStyle"></bean>
+    <bean id="CategorySubcategory" class="com.eportal.entities.CategorySubcategory"></bean>
+    <bean id="clauses" class="com.eportal.entities.Clauses"></bean>
+    <bean id="rfqHeader" class="com.eportal.entities.WorkOrderRfqHeader"></bean>
+    <bean id="rfqLineItem" class="com.eportal.entities.WorkOrderRfqLineItem"></bean>
+    <bean id="rfqAttachment" class="com.eportal.entities.WorkOrderAttachment"></bean>
+    <bean id="rfqClauses" class="com.eportal.entities.WorkOrderAddclauses"></bean>
+    <bean id="selectedApproval" class="com.eportal.entities.WorkOrderSelectedApprover"></bean>
+    <bean id="userCountrySeeded" class="com.eportal.entities.UserCountrySeeded"></bean>
+    <bean id="gstStateSeeded" class="com.eportal.entities.GstStateSeeded"></bean>
+    <bean id="supplierStatusSeeded" class="com.eportal.entities.SupplierStatusSeeded"></bean>
+    <bean id="typeOfBusinessSeeded" class="com.eportal.entities.TypeOfBusinessSeeded"></bean>
+    <bean id="supplierUser" class="com.eportal.entities.SupplierUser"></bean>
+    <bean id="supplierUserBankDetail" class="com.eportal.entities.SupplierUserBankDetail"></bean>
+    <bean id="supplierBankDetailsNew" class="com.eportal.entities.SupplierBankDetailsNew"></bean>
+    <bean id="workOrderComment" class="com.eportal.entities.WorkOrderComment"></bean>
+    <bean id="supplierSelection" class="com.eportal.entities.SupplierSelection"></bean>
+    <bean id="supplierAddattachment" class="com.eportal.entities.SupplierAddattachment"></bean>
+    <bean id="supplierHeader" class="com.eportal.entities.SupplierHeader"></bean>
+    <bean id="supplierLineitem" class="com.eportal.entities.SupplierLineitem"></bean>
+    <bean id="supplierUserAttachment" class="com.eportal.entities.SupplierUserAttachment"></bean>
+    <bean id="supplierUserRegContactDetails" class="com.eportal.entities.SupplierUserRegContactDetails"></bean>
+    <bean id="currencySeeded" class="com.eportal.entities.CurrencySeeded"></bean>
+    <bean id="qmQuestion" class="com.eportal.entities.QmQuestion"></bean>
+    <bean id="qmAnswer" class="com.eportal.entities.QmAnswer"></bean>
+    <bean id="userWf" class="com.eportal.entities.UserWf"></bean>
+    <bean id="customerDocument" class="com.eportal.entities.CustomerDocument"></bean>
+    <bean id="customerSubUser" class="com.eportal.entities.CustomerSubUser"></bean>
+    <bean id="customerDocumentSeeded" class="com.eportal.entities.CustomerDocumentSeeded"></bean>
+    <bean id="groups" class="com.eportal.entities.Groups"></bean>
+    <bean id="supplierGroup" class="com.eportal.entities.SupplierGroup"></bean>
+    <bean id="customerSeeded" class="com.eportal.entities.CustomerSeeded"></bean>
+    <bean id="projectSeeded" class="com.eportal.entities.ProjectSeeded"></bean>
+    <bean id="customerNotification" class="com.eportal.entities.CustomerNotification"></bean>
+    <bean id="customerProjectMapping" class="com.eportal.entities.CustomerProjectMapping"></bean>
+    <bean id="custSecQues" class="com.eportal.entities.CustSecQues"></bean>
+    <bean id="customerSecQueSeeded" class="com.eportal.entities.CustomerSecQueSeeded"></bean>
+    <bean id="customerAuditReport" class="com.eportal.entities.CustomerAuditReport"></bean>
+    <bean id="customerImage" class="com.eportal.entities.CustomerImage"></bean>
+    <bean id="passwordConfiguration" class="com.eportal.entities.PasswordConfiguration"></bean>
+    <bean id="customerProfileUpdateReport" class="com.eportal.entities.CustomerProfileUpdateReport"></bean>
+    <bean id="customerUserTrackingReport" class="com.eportal.entities.CustomerUserTrackingReport"></bean>
+    <bean id="customerMail" class="com.eportal.entities.CustomerMail"></bean>
+    <bean id="customerAutoMail" class="com.eportal.entities.CustomerAutoMail"></bean>
+</beans>

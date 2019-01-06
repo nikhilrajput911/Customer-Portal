@@ -1,0 +1,173 @@
+/*    --------------------------------------------------
+	:: Login Section
+	-------------------------------------------------- */
+/*html, body {
+  height: 100vh;
+}*/
+.header-div{
+    height: 70px;
+    background-color: #1b344b;
+    color: orange;
+}
+.body-div{
+    /*background-color: yellow;*/
+}
+.footer-div{
+    background-color: palegreen;
+    height: 100%;
+}
+
+.container-div{
+    height: 100vh;
+}
+.login-div{
+    height: 100vh;
+} 
+.login-content-div{
+    height: 100vh;
+    background-color: #1b344b;
+    width: 28%;
+/*    margin-bottom: -999px;
+    padding-bottom: 999px;*/
+}
+#login {
+    padding-top: 50px;
+    
+}
+#login .form-wrap {
+    width: 60%;
+    margin: auto;
+    
+}
+
+#login h2 {
+    color: orange;
+    font-size: 30px;    
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+#login .checkbox {
+    margin-bottom: 20px;
+    position: relative;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+#login .checkbox.show:before {
+    content: '\e013';
+    color: #1fa67b;
+    font-size: 17px;
+    margin: 1px 0 0 3px;
+    position: absolute;
+    pointer-events: none;
+    font-family: 'Glyphicons Halflings';
+}
+#login .checkbox .character-checkbox {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    display: inline-block;
+}
+#login .checkbox .label {
+    color: #6d6d6d;
+    font-size: 13px;
+    font-weight: normal;
+}
+#login .btn.btn-custom {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.btn-custom{
+    width: 100px;
+    height: 50px;
+}
+#login .forget {
+    font-size: 15px;
+    text-align: center;
+    display: block;
+    font-weight: bold;
+}
+
+/*    --------------------------------------------------
+	:: Inputs & Buttons
+	-------------------------------------------------- */
+.form-control {
+    color: #212121;
+}
+.btn-custom {
+    color: #fff;
+    background-color: #1fa67b;
+    font-weight: bold;
+    
+}
+/*.btn-custom:hover,
+.btn-custom:focus {
+    color: #fff;
+}*/
+
+/*    --------------------------------------------------
+    :: Footer
+	-------------------------------------------------- */
+#footer {
+    color: #6d6d6d;
+    font-size: 12px;
+    text-align: center;
+}
+#footer p {
+    margin-bottom: 0;
+}
+#footer a {
+    color: inherit;
+}
+.logo-name{
+    color: orange;
+}
+.contactUs{
+    color: whitesmoke;
+    padding-top: 20px;
+}
+.help{
+    color: whitesmoke;
+    padding-top: 20px;
+}
+.language{
+    color: whitesmoke;
+    padding-top: 20px;
+}
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    .login-div {background: whitesmoke; width: 100%; padding-top: 30px; height: 90vh;}
+    .login-content-div {width: 100%; height: 90vh;}
+    .contactUs {width: 100%;background: #1b344b;}
+    .help {width: 100%;background: #1b344b;}
+    .language {width: 100%;background: #1b344b;}
+    .logo-name {width: 100%;background: #1b344b;}
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .login-div {background: whitesmoke;}
+    
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    .login-div {background: whitesmoke; width: 72%}
+    .header-div {}
+} 
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    .login-div {background: whitesmoke;}
+} 
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    .login-div {background: white;margin-bottom: 0px; padding-top: 40px; width: 72%;}
+}
